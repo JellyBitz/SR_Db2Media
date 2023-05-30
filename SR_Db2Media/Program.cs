@@ -17,12 +17,11 @@ namespace SR_Db2Media
 
             try
             {
-                // Load file
+                // Load settings
                 Settings settings = LoadOrCreateFile("Settings.json");
 
                 // Create output folder
                 Directory.CreateDirectory(settings.OutputPath);
-
 
                 // Create database handler
                 SQLDataDriver sql = new SQLDataDriver(settings.Connection.Host, settings.Connection.Username, settings.Connection.Password, settings.Connection.Database);
@@ -42,12 +41,12 @@ namespace SR_Db2Media
                     // Check if is enabled
                     if (query2path.Enabled)
                     {
-                        var csv = sql.GetTableResult(query2path.Query);
+                        var rows = sql.GetTableResult(query2path.Query);
                         // Overwrite file
                         Console.WriteLine("Creating: "+filePath);
                         using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.Unicode))
                         {
-                            foreach (var row in csv)
+                            foreach (var row in rows)
                                 sw.WriteLine(string.Join("\t",row));
                         }
                         // Import file into media
@@ -55,7 +54,7 @@ namespace SR_Db2Media
                             ImportFile(settings,filePath);
 
                         // Encrypt skilldata
-                        if (settings.UseSkillDataEncryptor && query2path.Path.StartsWith("skilldata_"))
+                        if (settings.UseSkillDataEncryptor && query2path.Path.ToLowerInvariant().StartsWith("skilldata_"))
                         {
                             var filePathEnc = Path.Combine(settings.OutputPath, Path.GetFileNameWithoutExtension(query2path.Path) + ".enc");
                             Console.WriteLine("Encrypting: " + filePath);
@@ -85,13 +84,18 @@ namespace SR_Db2Media
             }
         }
         #region Private Helpers
-        // Creates a default file if doesn't exists
+        /// <summary>
+        /// Creates a default settings if file doesn't exists
+        /// </summary>
         private static Settings LoadOrCreateFile(string FilePath)
         {
             if (!File.Exists(FilePath))
                 File.WriteAllText(FilePath, JsonConvert.SerializeObject(new Settings(true), Formatting.Indented));
             return JsonConvert.DeserializeObject<Settings>(File.ReadAllText(FilePath));
         }
+        /// <summary>
+        /// Import file into media.pk2
+        /// </summary>
         private static void ImportFile(Settings settings, string filePath)
         {
             // Open Pk2

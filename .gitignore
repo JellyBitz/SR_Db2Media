@@ -1,0 +1,9 @@
+# Visual Studio cache
+.vs/
+
+# Visual studio Packages
+packages/
+
+# Debugging data generated
+SR_Db2Media/bin/
+SR_Db2Media/obj/

@@ -1,4 +1,4 @@
-# SR_Db2Media
+# [<img src="https://raw.githubusercontent.com/JellyBitz/SR_Db2Media/master/SR_Db2Media/icon.ico" width="24" height="24">](#) SR_Db2Media
 Extract, encrypt and import Silkroad databases into the client.
 
 ### Features

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 
 namespace SR_Db2Media.Silkroad.Utils
@@ -6,7 +7,7 @@ namespace SR_Db2Media.Silkroad.Utils
     public class SkillDataEncryptor
     {
         #region Private Members
-        private static readonly byte[] _HashTable01 = new byte[256]
+        private static readonly byte[] _HashTable01 = new byte[]
         {
             0x07, 0x83, 0xBC, 0xEE, 0x4B, 0x79, 0x19, 0xB6, 0x2A, 0x53, 0x4F, 0x3A, 0xCF, 0x71, 0xE5, 0x3C, 0x2D, 0x18,
             0x14, 0xCB, 0xB6, 0xBC, 0xAA, 0x9A, 0x31, 0x42, 0x3A, 0x13, 0x42, 0xC9, 0x63, 0xFC, 0x54, 0x1D, 0xF2, 0xC1,
@@ -24,7 +25,7 @@ namespace SR_Db2Media.Silkroad.Utils
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x00,
         };
-        private static readonly byte[] _HashTable02 = new byte[496]
+        private static readonly byte[] _HashTable02 = new byte[]
         {
             0x0D, 0x05, 0x90, 0x41, 0xF9, 0xD0, 0x65, 0xBF, 0xF9, 0x0B, 0x15, 0x93, 0x80, 0xFB, 0x01, 0x02, 0xB6, 0x08,
             0xC4, 0x3C, 0xC1, 0x49, 0x94, 0x4D, 0xCE, 0x1D, 0xFD, 0x69, 0xEA, 0x19, 0xC9, 0x57, 0x9C, 0x4D, 0x84, 0x62,
@@ -55,11 +56,6 @@ namespace SR_Db2Media.Silkroad.Utils
             0x81, 0xC7, 0x5B, 0xC0, 0x82, 0xCC, 0xD2, 0x91, 0x9D, 0x29, 0x93, 0x0C, 0x9D, 0x5D, 0x57, 0xAD, 0xD4, 0xC6,
             0x40, 0x93, 0x8D, 0xE9, 0xD3, 0x35, 0x9D, 0xC6, 0xD3, 0x00
         };
-        private static readonly byte[] EncryptedFooter = new byte[21]
-        {
-            0x0D, 0x00, 0x0A, 0x00, 0x2F, 0x00, 0x2F, 0x00, 0x65, 0x00, 0x6E, 0x00, 0x63, 0x00, 0x72, 0x00, 0x79, 0x00,
-            0x70, 0x00, 0x74,
-        };
         #endregion
 
         #region Public Methods
@@ -68,15 +64,18 @@ namespace SR_Db2Media.Silkroad.Utils
             using (FileStream fs = new FileStream(FilePath,FileMode.Open,FileAccess.Read))
             {
                 long fileSize = fs.Length;
-                byte[] buffer = new byte[fileSize + EncryptedFooter.Length + 1];
+                // Encrypt footer
+                byte[] encrypt = Encoding.Unicode.GetBytes("//encrypt");
+                byte[] buffer = new byte[fileSize + encrypt.Length];
+                Array.Copy(encrypt, 0, buffer, fileSize, encrypt.Length);
                 // Encrypt into buffer
                 uint key = 0x8C1F;
                 for (int i = 0; i < fileSize; i++)
                 {
-                    buffer[i] -= (byte)(fs.ReadByte() - (byte)(_HashTable01[key % 0xA7] - _HashTable02[key % 0x1EF]));
+                    buffer[i] = (byte)fs.ReadByte();
+                    buffer[i] -= (byte)(_HashTable01[key % 0xA7] - _HashTable02[key % 0x1EF]);
                     key++;
                 }
-                EncryptedFooter.CopyTo(buffer, fileSize);
                 // Save it
                 File.WriteAllBytes(FilePathEncrypted, buffer);
             }

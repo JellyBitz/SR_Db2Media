@@ -56,12 +56,12 @@ namespace SR_Db2Media
                         // Encrypt skilldata
                         if (settings.UseSkillDataEncryptor && query2path.Path.ToLowerInvariant().StartsWith("skilldata_"))
                         {
-                            var filePathEnc = Path.Combine(settings.OutputPath, Path.GetFileNameWithoutExtension(query2path.Path) + ".enc");
+                            var filePathEnc = Path.Combine(settings.OutputPath, Path.GetFileNameWithoutExtension(query2path.Path) + "enc.txt");
                             Console.WriteLine("Encrypting: " + filePath);
                             SkillDataEncryptor.EncryptFile(filePath, filePathEnc);
                             // Import file into media
                             if (canImport)
-                                ImportFile(settings, filePath);
+                                ImportFile(settings, filePathEnc);
                         }
                     }
                     else

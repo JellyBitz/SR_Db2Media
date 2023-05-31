@@ -12,7 +12,7 @@ namespace Pk2WriterAPI
         /// </para>
         /// </summary>
         [DllImport("Pk2Writer.dll", EntryPoint = "_Initialize@4", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
-        public static extern bool _Initialize(string GFXDllFilename);
+        private static extern bool _Initialize(string GFXDllFilename);
         /// <summary>
         /// Initialize Pk2 writer to execute operations.
         /// </summary>
@@ -71,7 +71,7 @@ namespace Pk2WriterAPI
         /// </summary>
         /// <param name="entryFilename">The full path to the file into the PK2</param>
         [DllImport("Pk2Writer.dll", EntryPoint = "_ImportFile@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
-        public static extern bool _ImportFile(string entryFilename, string inputFilename);
+        private static extern bool _ImportFile(string entryFilename, string inputFilename);
         /// <summary>
         /// Imports a file into the Pk2.
         /// </summary>

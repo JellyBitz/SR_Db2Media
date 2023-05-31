@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Dynamic;
 
 namespace SR_Db2Media
 {
     public class Settings
     {
         #region Public Properties
-        public Section_SQL Connection { get; set; } = new Section_SQL();
-        public class Section_SQL
+        public Section_SQLConnection SQLConnection { get; set; } = new Section_SQLConnection();
+        public class Section_SQLConnection
         {
             public string Host { get; set; } = ".\\VSRO_TESTIN";
             public string Username { get; set; } = "admin";

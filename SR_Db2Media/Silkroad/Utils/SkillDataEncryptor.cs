@@ -67,11 +67,11 @@ namespace SR_Db2Media.Silkroad.Utils
         {
             using (FileStream fs = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
             {
+                // Calculate sizes
                 int fileSize = (int)fs.Length;
-                // Encrypt footer
-                byte[] encrypt = Encoding.Unicode.GetBytes("\r\n//encrypt");
-                byte[] buffer = new byte[fileSize + encrypt.Length];
-                // Encrypt into buffer
+                byte[] footer = Encoding.Unicode.GetBytes("\r\n//encrypt");
+                byte[] buffer = new byte[fileSize + footer.Length];
+                // Encrypt bytes into buffer
                 uint key = 0x8C1F;
                 for (int i = 0; i < fileSize; i++)
                 {
@@ -79,7 +79,7 @@ namespace SR_Db2Media.Silkroad.Utils
                     buffer[i] -= (byte)(_HashTable01[key % 0xA7] - _HashTable02[key % 0x1EF]);
                     key++;
                 }
-                Array.Copy(encrypt, 0, buffer, fileSize, encrypt.Length);
+                Array.Copy(footer, 0, buffer, fileSize, footer.Length);
                 // Save it
                 File.WriteAllBytes(FilePathEncrypted, buffer);
             }

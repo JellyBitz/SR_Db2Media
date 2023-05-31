@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
-using Pk2WriterAPI;
-using SR_Db2Media.Silkroad.Utils;
+﻿using SR_Db2Media.Silkroad.Utils;
 using SR_Db2Media.Utils.Database;
+
+using Newtonsoft.Json;
+using Pk2WriterAPI;
+
 using System;
 using System.IO;
 using System.Text;
@@ -21,18 +23,17 @@ namespace SR_Db2Media
                 Settings settings = LoadOrCreateFile("Settings.json");
 
                 // Create output folder
-                Directory.CreateDirectory(settings.OutputPath);
+                if(!string.IsNullOrEmpty(settings.OutputPath))
+                    Directory.CreateDirectory(settings.OutputPath);
 
                 // Create database handler
-                SQLDataDriver sql = new SQLDataDriver(settings.Connection.Host, settings.Connection.Username, settings.Connection.Password, settings.Connection.Database);
+                SQLDataDriver sql = new SQLDataDriver(settings.SQLConnection.Host, settings.SQLConnection.Username, settings.SQLConnection.Password, settings.SQLConnection.Database);
 
-                // Check Pk2 requirements to import
+                // Check Pk2 requirements to import into media
                 bool canImport = File.Exists(settings.ImportToPk2.MediaPk2Path) && File.Exists(settings.ImportToPk2.GFXFileManagerDllPath);
                 if (canImport)
-                {
-                    // Check files used to initialize
+                    // Initialize DLL
                     Pk2Writer.Initialize(settings.ImportToPk2.GFXFileManagerDllPath);
-                }
 
                 // Run setup
                 foreach (var query2path in settings.Setup)
@@ -46,8 +47,8 @@ namespace SR_Db2Media
                         Console.WriteLine("Creating: "+filePath);
                         using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.Unicode))
                         {
-                            foreach (var row in rows)
-                                sw.WriteLine(string.Join("\t",row));
+                            foreach (var columns in rows)
+                                sw.WriteLine(string.Join("\t",columns));
                         }
                         // Import file into media
                         if(canImport)
@@ -72,14 +73,14 @@ namespace SR_Db2Media
                     }
                 }
 
-                // Close media.pk2
+                // Deinitialize DLL
                 if (canImport)
                     Pk2Writer.Deinitialize();
             }
             catch (Exception ex)
             {
                 // User friendly
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Error: " + ex.Message);
                 Console.ReadKey();
             }
         }

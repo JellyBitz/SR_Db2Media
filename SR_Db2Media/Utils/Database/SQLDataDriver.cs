@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Threading.Tasks;
 
 namespace SR_Db2Media.Utils.Database
 {
@@ -10,7 +7,6 @@ namespace SR_Db2Media.Utils.Database
     {
         #region Private Members
         private string ConnectionString { get; }
-        private SqlConnection Connection { get; set; }
         #endregion
 
         #region Constructor

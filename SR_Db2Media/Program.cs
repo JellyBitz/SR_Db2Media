@@ -30,7 +30,7 @@ namespace SR_Db2Media
                 SQLDataDriver sql = new SQLDataDriver(settings.SQLConnection.Host, settings.SQLConnection.Username, settings.SQLConnection.Password, settings.SQLConnection.Database);
 
                 // Check Pk2 requirements to import into media
-                bool canImport = File.Exists(settings.ImportToPk2.MediaPk2Path) && File.Exists(settings.ImportToPk2.GFXFileManagerDllPath);
+                bool canImport = settings.ImportToPk2.Enabled && File.Exists(settings.ImportToPk2.MediaPk2Path) && File.Exists(settings.ImportToPk2.GFXFileManagerDllPath);
                 if (canImport)
                     // Initialize DLL
                     Pk2Writer.Initialize(settings.ImportToPk2.GFXFileManagerDllPath);

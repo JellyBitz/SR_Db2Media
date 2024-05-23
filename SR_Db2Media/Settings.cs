@@ -19,7 +19,6 @@ namespace SR_Db2Media
         public class Section_ImportToPk2
         {
             public bool Enabled { get; set; } = true;
-            public string GFXFileManagerDllPath { get; set; } = "C:\\Silkroad\\VSRO_Client\\GFXFileManager.dll";
             public string BlowfishKey { get; set; } = "169841";
             public string MediaPk2Path { get; set; } = "C:\\Silkroad\\VSRO_Client\\Media.pk2";
             public string TextdataPath { get; set; } = "server_dep\\silkroad\\textdata\\";

@@ -49,11 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pk2WriterAPI\PK2Writer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Silkroad\Utils\SkillDataEncryptor.cs" />
+    <Compile Include="PK2API\SRO.PK2\JMXPACK.cs" />
+    <Compile Include="PK2API\SRO.PK2\Pk2File.cs" />
+    <Compile Include="PK2API\SRO.PK2\Pk2Folder.cs" />
+    <Compile Include="PK2API\SRO.PK2\Pk2Stream.cs" />
+    <Compile Include="PK2API\SRO.Security\Blowfish.cs" />
+    <Compile Include="PK2API\SRO.Utility\BlowfishHelpers.cs" />
+    <Compile Include="PK2API\SRO.Utility\ByteArrayHelpers.cs" />
+    <Compile Include="PK2API\SRO.Utility\FileStreamHelpers.cs" />
     <Compile Include="Utils\Database\SQLDataDriver.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,9 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
-    <Content Include="Pk2Writer.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

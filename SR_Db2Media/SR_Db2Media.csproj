@@ -51,16 +51,16 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Packages\SRO.PK2API\SRO.PK2API\SRO.PK2API.Security\Blowfish.cs" />
+    <Compile Include="Resources\Packages\SRO.PK2API\SRO.PK2API\SRO.PK2API.Utility\BlowfishHelpers.cs" />
+    <Compile Include="Resources\Packages\SRO.PK2API\SRO.PK2API\SRO.PK2API.Utility\ByteArrayHelpers.cs" />
+    <Compile Include="Resources\Packages\SRO.PK2API\SRO.PK2API\SRO.PK2API.Utility\FileStreamHelpers.cs" />
+    <Compile Include="Resources\Packages\SRO.PK2API\SRO.PK2API\SRO.PK2API\JMXPACK.cs" />
+    <Compile Include="Resources\Packages\SRO.PK2API\SRO.PK2API\SRO.PK2API\Pk2File.cs" />
+    <Compile Include="Resources\Packages\SRO.PK2API\SRO.PK2API\SRO.PK2API\Pk2Folder.cs" />
+    <Compile Include="Resources\Packages\SRO.PK2API\SRO.PK2API\SRO.PK2API\Pk2Stream.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Silkroad\Utils\SkillDataEncryptor.cs" />
-    <Compile Include="PK2API\SRO.PK2\JMXPACK.cs" />
-    <Compile Include="PK2API\SRO.PK2\Pk2File.cs" />
-    <Compile Include="PK2API\SRO.PK2\Pk2Folder.cs" />
-    <Compile Include="PK2API\SRO.PK2\Pk2Stream.cs" />
-    <Compile Include="PK2API\SRO.Security\Blowfish.cs" />
-    <Compile Include="PK2API\SRO.Utility\BlowfishHelpers.cs" />
-    <Compile Include="PK2API\SRO.Utility\ByteArrayHelpers.cs" />
-    <Compile Include="PK2API\SRO.Utility\FileStreamHelpers.cs" />
     <Compile Include="Utils\Database\SQLDataDriver.cs" />
   </ItemGroup>
   <ItemGroup>
